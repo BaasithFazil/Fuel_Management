@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/bootstrap.bundle.min.js"></script>    
+    <title>Document</title>
+</head>
+<body>
+
+    <h1>Update Vehicle Data</h1>
+
+    <form>
+      <label for="inputTokenNumber">Token Number:</label>
+      <input type="text" id="inputTokenNumber" name="inputTokenNumber"><br><br>
+  
+      <label for="userInput">User Input:</label>
+      <input type="text" id="userInput" name="userInput"><br><br>
+  
+      <input type="submit" value="Submit" onclick="updateVehicleData()">
+    </form>
+
+
+    <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-database.js"></script>
+    <script>
+
+
+        function init() {
+
+            const firebaseConfig = {
+                apiKey: "AIzaSyAebGvZhL7hQLLllFF8Bm7iKyqT7FIyk-I",
+        authDomain: "loginauth-38206.firebaseapp.com",
+        databaseURL: "https://loginauth-38206-default-rtdb.firebaseio.com/",
+        projectId: "loginauth-38206",
+        storageBucket: "loginauth-38206.appspot.com",
+        messagingSenderId: "479003296642",
+        appId: "1:479003296642:web:20b63baf55a2ab0b12459b"
+            };
+            firebase.initializeApp(firebaseConfig);   
+        }
+
+        function updateVehicleData() {
+            // Get input values
+            var inputTokenNumber = document.getElementById('inputTokenNumber').value;
+            var userInput = document.getElementById('userInput').value;
+            
+            // Check if input is valid
+            if (inputTokenNumber == '' || isNaN(inputTokenNumber) || userInput == '' || isNaN(userInput)) {
+                alert('Please enter valid input!');
+                return;
+            }
+            
+            // Create a reference to the vehicle data node
+            var vehicleDataRef = firebase.database().ref('vehicleData');
+
+            // Query the database for data where "TokenNumber" is equal to the user input
+            var query = vehicleDataRef.orderByChild('tokenNumber').equalTo(inputTokenNumber);
+
+            query.once('value', function(snapshot) {
+                if (snapshot.exists()) {
+                    snapshot.forEach(function(childSnapshot) {
+                        var vehicleId = childSnapshot.key;
+
+                        // Get the current value of the "TokenNumber" property
+                        var currentTokenNumber = childSnapshot.child('tokenNumber').val();
+
+                        // Calculate the new value of the "TokenNumber" property
+                        var newTokenNumber = currentTokenNumber - userInput;
+
+                        // Merge the updated property value with the existing vehicle data
+                        var updateObject = {};
+                        updateObject['fuelAllocation'] = newTokenNumber;
+                        vehicleDataRef.child(vehicleId).update(updateObject);
+                        
+                        alert('Token number updated successfully!');
+                    });
+                } else {
+                    alert('Token number not found! Please enter a valid token number.');
+                }
+            });
+        }
+
+
+        init();
+    </script>
+</body>
+</html>
