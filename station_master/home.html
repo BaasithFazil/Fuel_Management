@@ -1,91 +1,248 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html>
+  <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/index.css">
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <script src="/js/bootstrap.bundle.min.js"></script>    
-    <title>Document</title>
-</head>
-<body>
+    <title>Fuel Allocation Form</title>
+    <style>
+      /* Style for the form */
+      #fuel-allocation-form {
+        max-width: 500px;
+        margin: 0 auto;
+      }
+      
+      label {
+        display: block;
+        margin-bottom: 10px;
+      }
+      
+      #fuel-allocation, #token-number {
+        display: block;
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-bottom: 20px;
+      }
+      
+      #allocation-submit {
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      
+      #allocation-submit:hover {
+        background-color: #45a049;
+      }
 
-    <h1>Update Vehicle Data</h1>
+      .number-button {
+        font-size: 20px;
+        padding: 20px;
+        margin: 5px;
+        background-color: #f2f2f2;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      
+      .number-button:hover {
+        background-color: #ccc;
+      }
 
-    <form>
-      <label for="inputTokenNumber">Token Number:</label>
-      <input type="text" id="inputTokenNumber" name="inputTokenNumber"><br><br>
-  
-      <label for="userInput">User Input:</label>
-      <input type="text" id="userInput" name="userInput"><br><br>
-  
-      <input type="submit" value="Submit" onclick="updateVehicleData()">
+
+      #fuel-allocation-form {
+        position: relative;
+        padding: 1rem;
+        box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1), 
+                    0 0.125rem 0.25rem rgba(0, 0, 0, 0.08);
+        border-radius: 0.5rem;
+      }
+
+      #fuel-allocation-form::before {
+        content: '';
+        position: absolute;
+        top: -0.5rem;
+        left: -0.5rem;
+        right: -0.5rem;
+        bottom: -0.5rem;
+        z-index: -1;
+        background: #fff;
+        border-radius: 1rem;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1), 
+                    0 0.25rem 0.5rem rgba(0, 0, 0, 0.08);
+      }
+
+      
+    </style>
+  </head>
+  <body>
+    <h1>Fuel Allocation Form</h1>
+    
+    <!-- Fuel allocation form -->
+    <form id="fuel-allocation-form">
+      <label for="token-number" >Token Number</label>
+      <input type="text" id="token-number" name="token-number">
+      
+      <label for="fuel-allocation">Fuel Allocation</label>
+      <input type="number" id="fuel-allocation" name="fuel-allocation" min="1" max="20">
+      
+      <input type="submit" value="Submit" id="allocation-submit"> <br>
+
+
+      <button class="number-button" onclick="pasteNumber(1)">1</button>
+      <button class="number-button" onclick="pasteNumber(2)">2</button>
+      <button class="number-button" onclick="pasteNumber(3)">3</button>
+      <button class="number-button" onclick="pasteNumber(4)">4</button>
+      <button class="number-button" onclick="pasteNumber(5)">5</button>
+      <button class="number-button" onclick="pasteNumber(6)">6</button>
+      <button class="number-button" onclick="pasteNumber(7)">7</button>
+      <button class="number-button" onclick="pasteNumber(8)">8</button>
+      <button class="number-button" onclick="pasteNumber(9)">9</button>
+      <button class="number-button" onclick="pasteNumber(10)">10</button>
+      <button class="number-button" onclick="pasteNumber(11)">11</button>
+      <button class="number-button" onclick="pasteNumber(12)">12</button>
+      <button class="number-button" onclick="pasteNumber(13)">13</button>
+      <button class="number-button" onclick="pasteNumber(14)">14</button>
+      <button class="number-button" onclick="pasteNumber(15)">15</button>
+      <button class="number-button" onclick="pasteNumber(16)">16</button>
+      <button class="number-button" onclick="pasteNumber(17)">17</button>
+      <button class="number-button" onclick="pasteNumber(18)">18</button>
+      <button class="number-button" onclick="pasteNumber(19)">19</button>
+      <button class="number-button" onclick="pasteNumber(20)">20</button>
+
     </form>
-
-
-    <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-database.js"></script>
+    
+    <!-- Firebase configuration and initialization -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.css">
     <script>
+      var firebaseConfig = {
+  apiKey: "AIzaSyAebGvZhL7hQLLllFF8Bm7iKyqT7FIyk-I",
+  authDomain: "loginauth-38206.firebaseapp.com",
+  databaseURL: "https://loginauth-38206-default-rtdb.firebaseio.com/",
+  projectId: "loginauth-38206",
+  storageBucket: "loginauth-38206.appspot.com",
+  messagingSenderId: "479003296642",
+  appId: "1:479003296642:web:20b63baf55a2ab0b12459b"
+};
 
 
-        function init() {
+function pasteNumber(valueToShow) {
+  var input = document.getElementById("fuel-allocation");
+  input.value = valueToShow;
+}
 
-            const firebaseConfig = {
-                apiKey: "AIzaSyAebGvZhL7hQLLllFF8Bm7iKyqT7FIyk-I",
-        authDomain: "loginauth-38206.firebaseapp.com",
-        databaseURL: "https://loginauth-38206-default-rtdb.firebaseio.com/",
-        projectId: "loginauth-38206",
-        storageBucket: "loginauth-38206.appspot.com",
-        messagingSenderId: "479003296642",
-        appId: "1:479003296642:web:20b63baf55a2ab0b12459b"
-            };
-            firebase.initializeApp(firebaseConfig);   
+firebase.initializeApp(firebaseConfig);
+var databaseRef = firebase.database().ref("vehicleData");
+
+var tokenNumberInput = document.getElementById("token-number");
+var fuelAllocationInput = document.getElementById("fuel-allocation");
+var fuelAllocationForm = document.getElementById("fuel-allocation-form");
+
+fuelAllocationForm.addEventListener("submit", function(event) {
+  event.preventDefault();
+  
+  // Get the token number and fuel allocation from the form
+  var tokenNumber = tokenNumberInput.value.trim();
+  var parseIn = parseInt(tokenNumber);
+  var fuelAllocation = fuelAllocationInput.value.trim();
+  
+  // Validate the token number
+  if (isNaN(parseIn) || parseIn.length === 0) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Invalid Token Number',
+      text: 'Please enter a valid token number.',
+    });
+    return;
+  }
+  
+  // Validate the fuel allocation
+  if (fuelAllocation.length === 0) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Fuel Allocation Required',
+      text: 'Please enter a fuel allocation.',
+    });
+    return;
+  }
+  
+  // Update the fuel allocation in the database
+  var vehicleRef = databaseRef.orderByChild("tokenNumber").equalTo(parseIn);
+  vehicleRef.once("value", function(snapshot) {
+    if (snapshot.exists()) {
+      snapshot.forEach(function(childSnapshot) {
+        var vehicleData = childSnapshot.val();
+        var vehicleKey = childSnapshot.key;
+        var fuelLevel = vehicleData.fuelAllocation;
+        
+        // Calculate the new fuel level
+        var newFuelLevel = fuelLevel - parseInt(fuelAllocation);
+        
+        // Validate the new fuel level
+        if (newFuelLevel < 0) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Fuel Allocation Exceeded',
+            text: `Fuel allocation for vehicle ${vehicleData.vehicleNumber} exceeds available fuel.`,
+          });
+          return;
         }
+        
+        // Update the fuel allocation and fuel level in the database
+        databaseRef.child(vehicleKey).update({
+          fuelAllocation: fuelAllocation,
+          fuelLevel: newFuelLevel,
+        }).then(function() {
+          // Show success message
+          Swal.fire({
+            icon: 'success',
+            title: 'Fuel Allocation Updated',
+            text: `Fuel allocation for vehicle ${vehicleData.vehicleNumber} updated to ${fuelAllocation} liters. Fuel level updated to ${newFuelLevel} liters.`,
+          });
+          
+          // Reset the form
+          fuelAllocationForm.reset();
+        }).catch(function(error) {
+          // Show error message
+          Swal.fire({
+            icon: 'error',
+            title: 'Update Failed',
+            text: `Failed to update fuel allocation: ${error.message}`,
+          });
+        });
+        
+      });
+    } else {
+      // Show error message if no vehicle found with the given token number
+      Swal.fire({
+        icon: 'error',
+        title: 'Vehicle Not Found',
+        text: 'No vehicle found with the given token number.',
+      });
+    }
+  }).catch(function(error) {
+    // Show error message
+    Swal.fire({
+      icon: 'error',
+      title: 'Database Error',
+      text: `Failed to retrieve vehicle data: ${error.message}`,
+    });
+  });
+});
 
-        function updateVehicleData() {
-            // Get input values
-            var inputTokenNumber = document.getElementById('inputTokenNumber').value;
-            var userInput = document.getElementById('userInput').value;
-            
-            // Check if input is valid
-            if (inputTokenNumber == '' || isNaN(inputTokenNumber) || userInput == '' || isNaN(userInput)) {
-                alert('Please enter valid input!');
-                return;
-            }
-            
-            // Create a reference to the vehicle data node
-            var vehicleDataRef = firebase.database().ref('vehicleData');
-
-            // Query the database for data where "TokenNumber" is equal to the user input
-            var query = vehicleDataRef.orderByChild('tokenNumber').equalTo(inputTokenNumber);
-
-            query.once('value', function(snapshot) {
-                if (snapshot.exists()) {
-                    snapshot.forEach(function(childSnapshot) {
-                        var vehicleId = childSnapshot.key;
-
-                        // Get the current value of the "TokenNumber" property
-                        var currentTokenNumber = childSnapshot.child('tokenNumber').val();
-
-                        // Calculate the new value of the "TokenNumber" property
-                        var newTokenNumber = currentTokenNumber - userInput;
-
-                        // Merge the updated property value with the existing vehicle data
-                        var updateObject = {};
-                        updateObject['fuelAllocation'] = newTokenNumber;
-                        vehicleDataRef.child(vehicleId).update(updateObject);
-                        
-                        alert('Token number updated successfully!');
-                    });
-                } else {
-                    alert('Token number not found! Please enter a valid token number.');
-                }
-            });
-        }
 
 
-        init();
-    </script>
+</script>
 </body>
 </html>
+
+
+
+

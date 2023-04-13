@@ -4,6 +4,7 @@
 	<title>Firebase Search Demo</title>
 	<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
    <link rel="stylesheet" href="css/index.css">
    <link rel="stylesheet" href="css/bootstrap.min.css">
    <script src="js/bootstrap.bundle.min.js"></script>
@@ -51,7 +52,18 @@
 		// Clear any existing data from the list
 		vehicleList.innerHTML = "";
 
+		if(userId === "") {
+			Swal.fire({
+				icon: "error",
+				title: "Error",
+				text: "Please enter a token number"
+			});
+			return;
+		}
+
 		ref.orderByChild("tokenNumber").equalTo(helloWorld).on("value", function(snapshot) {
+
+			if(snapshot.exists()) {
 			snapshot.forEach(function(childSnapshot) {
 				var childKey = childSnapshot.key;
 				var childData = childSnapshot.val();
@@ -72,6 +84,14 @@
 				// Append the new HTML to the vehicle list
 				vehicleList.insertAdjacentHTML('beforeend', listItemHtml);
 			});
-		});
+		} else {
+			Swal.fire({
+				icon: "error",
+				title: "Oops...",
+				text: "No data found for the given token number!"
+			});
+		}
+		
+	});
 	}
 </script>
