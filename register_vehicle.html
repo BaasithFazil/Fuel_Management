@@ -4,6 +4,9 @@
 	<title>Sign In</title>
 	<script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-database.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.css">
+
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -17,6 +20,7 @@
       <a class="logo" href="#">Power Fuel</a>
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
+        <li><a href="aboutus.html">About Us</a></li>
         <li><a href="register_vehicle.html">Register Vehicle</a></li>
         <li><a href="vehicle_search/vehicle_detail_search.html">Search Vehicle</a></li>
       </ul>
@@ -70,23 +74,24 @@
     </main>
 
 	<!-- Modal dialog -->
-    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <!-- <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> -->
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <p id="modal-text"></p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary text-center" data-bs-dismiss="modal">Close</button>
-              <button id="copy-button">Copy Token Number</button>
-            </div>
-          </div>
+  <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title text-center fw-bold" id="exampleModalLabel">Your Token Number:</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h2 id="modal-text" class="text-center mb-5"></h2>
+          <p class="text-muted text-center">Please keep this token number safe, you will need it to access your account.</p>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <button type="button" class="btn  me-3" data-bs-dismiss="modal">Close</button>
+          <button id="copy-button" class="btn btn-success">Copy Token Number</button>
         </div>
       </div>
+    </div>
+  </div>
 
 
 

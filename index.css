@@ -162,3 +162,84 @@ nav {
     color: #666;
   }
   
+
+  /* home page modal  */
+
+  /* Customize the modal appearance */
+/* Modal */
+.modal-content {
+    border-radius: 20px;
+    border: none;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+  }
+  
+  .modal-header {
+    border-radius: 20px 20px 0px 0px;
+    border-bottom: none;
+    padding: 1rem;
+    background-color: #28a745;
+    color: #fff;
+  }
+  
+  .modal-body {
+    padding: 2rem;
+    font-size: 1.2rem;
+    color: #000;
+  }
+  
+  .modal-footer {
+    border-radius: 0px 0px 20px 20px;
+    border-top: none;
+    padding: 1rem;
+    background-color:#f9f9f9;
+  }
+  
+  .btn-primary {
+    background-color: #28a745;
+    border-color: #28a745;
+  }
+  
+  .btn-primary:hover {
+    background-color: #218838;
+    border-color: #218838;
+  }
+  
+  .btn-secondary {
+    background-color: #fff;
+    color: #000;
+    border-color: #000;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #000;
+    color: #fff;
+    border-color: #000;
+  }
+  
+  .btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+  }
+  
+  .btn-danger:hover {
+    background-color: #c82333;
+    border-color: #c82333;
+  }
+  
+  .btn-copy {
+    background-color: #000;
+    color: #fff;
+    border-color: #000;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .btn-copy:hover {
+    background-color: #fff;
+    color:#f9f9f9;
+    border-color: #000;
+  }
+  
+  
+  
